@@ -2,34 +2,37 @@
 ###
 ### netboot.xyz-custom menu example
 ###
+:fedora_atomic
+menu Fedora Atomic Desktops
+item silverblue Silverblue (GNOME)
+item kinoite Kinoite (KDE)
+item sway_atomic Sway Atomic
+item budgie_atomic Budgie Atomic
+item cosmic_atomic COSMIC Atomic
+item back Voltar
+choose target && goto ${target} || goto custom_menu
 
-:custom
-clear custom_choice
-menu RHEL fixing things
-item --gap RHEL8 Options
-item option_one ${space} Loading a kernel and initrd
-item option_two ${space} Loading an ISO
-item --gap This is a second sub menu
-item option_three ${space} Loads another custom sub menu
-choose custom_choice || goto custom_exit
-echo ${cls}
-goto ${custom_choice}
-goto custom_exit
+:silverblue
+kernel https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/vmlinuz inst.ks=https://raw.githubusercontent.com/g0newiped/netboot.xyz-custom/master/kickstarts/silverblue.ks
+initrd https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/initrd.img
+boot
 
-:option_one
-kernel http://192.168.50.5/images/pxeboot/vmlinuz
-initrd http://192.168.50.5/images/pxeboot/initrd.img
-imgargs vmlinuz put_kernel_img_args_here
-boot || goto custom_exit
+:kinoite
+kernel https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/vmlinuz inst.ks=https://raw.githubusercontent.com/g0newiped/netboot.xyz-custom/master/kickstarts/kinoite.ks
+initrd https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/initrd.img
+boot
 
-:option_two
-sanboot http://192.168.50.5/rhel-8.3-x86_64-boot.iso
-boot || goto custom_exit
+:sway_atomic
+kernel https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/vmlinuz inst.ks=https://raw.githubusercontent.com/g0newiped/netboot.xyz-custom/master/kickstarts/sway-atomic.ks
+initrd https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/initrd.img
+boot
 
-:option_three
-echo Chains into another menu...
-chain https://raw.githubusercontent.com/${github_user}/netboot.xyz-custom/master/custom1.ipxe || goto custom
+:budgie_atomic
+kernel https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/vmlinuz inst.ks=https://raw.githubusercontent.com/g0newiped/netboot.xyz-custom/master/kickstarts/budgie-atomic.ks
+initrd https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/initrd.img
+boot
 
-:custom_exit
-chain utils.ipxe
-exit
+:cosmic_atomic
+kernel https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/vmlinuz inst.ks=https://raw.githubusercontent.com/g0newiped/netboot.xyz-custom/master/kickstarts/cosmic-atomic.ks
+initrd https://download.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os/images/pxeboot/initrd.img
+boot
